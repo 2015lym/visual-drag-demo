@@ -38,11 +38,21 @@ export default {
     config: {
       type: Object,
       required: true,
-      default: () => {},
+      default: () => { },
     },
   },
   mounted() {
-    runAnimation(this.$refs.component.$el, this.config.animations)
+    this.$nextTick(() => {
+      runAnimation(this.$el, this.config.animations)
+    })
+    // 旧的方式先注释，经常无法找到对象
+    // 先让动画直接作用在子组件本身，样式略有不同。
+    // this.$nextTick(() => {
+    //   const target = this.$refs.component?.$el || this.$refs.component
+    //   if (target) {
+    //     runAnimation(target, this.config.animations)
+    //   }
+    // })
   },
   methods: {
     getStyle,

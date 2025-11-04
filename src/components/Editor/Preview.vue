@@ -41,6 +41,8 @@ export default {
   computed: mapState(['componentData', 'canvasStyleData']),
   created() {
     this.$set(this, 'copyData', deepCopy(this.componentData))
+    console.log(this.componentData)
+    console.log(this.canvasStyleData)
   },
   methods: {
     getStyle,

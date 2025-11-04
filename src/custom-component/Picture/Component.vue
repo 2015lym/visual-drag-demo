@@ -6,6 +6,7 @@
 
 <script>
 import OnEvent from '../common/OnEvent'
+import eventBus from '@/utils/eventBus'
 
 export default {
   extends: OnEvent,
@@ -48,6 +49,7 @@ export default {
     this.canvas = this.$refs.canvas
     this.ctx = this.canvas.getContext('2d')
     this.drawImage()
+    // eventBus.$on('imgChange', this.drawImage)
   },
   methods: {
     drawImage() {

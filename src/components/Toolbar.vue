@@ -27,16 +27,33 @@
       <el-button @click="preview(true)">截图</el-button>
 
       <div class="canvas-config">
-        <span>画布大小</span>
-        <input v-model="canvasStyleData.width" />
+        <span>分辨率</span>
+
+        <!-- 新增：预设尺寸下拉 -->
+        <el-select
+          v-model="presetValue"
+          placeholder="预设"
+          size="small"
+          style="width: 200px; margin: 0 16px"
+          @change="handlePresetChange"
+          filterable
+        >
+          <el-option
+            v-for="p in presets"
+            :key="p.key"
+            :label="p.label"
+            :value="p.key"
+          />
+          <el-option :value="'custom'" label="自定义" />
+        </el-select>
+
+        <!-- 原有输入框保留，增加 number 修饰符与同步逻辑 -->
+        <input v-model.number="canvasStyleData.width" @input="syncPresetSelection" />
         <span>*</span>
-        <input v-model="canvasStyleData.height" />
+        <input v-model.number="canvasStyleData.height" @input="syncPresetSelection" />
       </div>
-      <div class="canvas-config">
-        <span>画布比例</span>
-        <input v-model="scale" @input="handleScaleChange" />
-        %
-      </div>
+      <div class="canvas-config"> <span>画布比例</span> <input v-model="scale" @input="handleScaleChange" /> % </div>
+
       <el-switch
         v-model="switchValue"
         class="dark-mode-switch"
@@ -159,6 +176,12 @@ export default {
           isDisabled: true,
         },
       ],
+      presets: [
+        { key: '1600x720', label: '1600x720 (AH10Pro)', w: 1600, h: 720 },
+        { key: '1024x600', label: '1024x600 (AP7)', w: 1024, h: 600 },
+      ],
+      // 新增：当前下拉选中值
+      presetValue: 'custom',
     }
   },
   computed: {
@@ -177,8 +200,36 @@ export default {
     if (savedMode) {
       this.handleToggleDarkMode(savedMode)
     }
+    // 自定义分辨率 lym
+    this.syncPresetSelection()
+  },
+  watch: {
+    // 新增：如果宽高被其它地方改动，也能同步到下拉
+    'canvasStyleData.width'() { this.syncPresetSelection() },
+    'canvasStyleData.height'() { this.syncPresetSelection() },
   },
   methods: {
+    // 新增：选择预设时写入 width/height
+    handlePresetChange(val) {
+      if (val === 'custom') return
+      const p = this.presets.find(i => i.key === val)
+      if (p) {
+        this.canvasStyleData.width = p.w
+        this.canvasStyleData.height = p.h
+        // 选完就记录一次快照（可选）
+        this.$store.commit && this.$store.commit('recordSnapshot')
+        // 再同步一次（保证状态一致）
+        this.syncPresetSelection()
+      }
+    },
+
+    // 新增：根据当前宽高匹配预设；匹配不到则为自定义
+    syncPresetSelection() {
+      const w = Number(this.canvasStyleData.width)
+      const h = Number(this.canvasStyleData.height)
+      const match = this.presets.find(p => p.w === w && p.h === h)
+      this.presetValue = match ? match.key : 'custom'
+    },
     handleComponentAlign(command) {
       this.$store.commit(command)
       // 每次对齐后记录一次快照
@@ -362,6 +413,7 @@ export default {
     },
 
     onExportJSON() {
+      changeComponentsSizeWithScale(100)
       this.isShowDialog = true
       this.isExport = true
       this.jsonData = JSON.stringify(this.componentData, null, 4)
