@@ -4,7 +4,7 @@
       <el-collapse-item title="通用样式" name="style">
         <el-form>
           <el-form-item v-for="({ key, label }, index) in styleKeys" :key="index" :label="label">
-            <el-color-picker v-if="isIncludesColor(key)" v-model="curComponent.style[key]" show-alpha></el-color-picker>
+            <el-color-picker v-if="isIncludesColor(key)" v-model="curComponent.style[key]" show-alpha :predefine="predefineColors"></el-color-picker>
             <el-select v-else-if="selectKey.includes(key)" v-model="curComponent.style[key]">
               <el-option
                 v-for="item in optionMap[key]"
@@ -40,6 +40,7 @@ import {
 } from '@/utils/attr'
 import Request from './Request'
 import Linkage from './Linkage'
+import { predefineColors } from '@/utils/style'
 
 export default {
   components: { Request, Linkage },
@@ -52,6 +53,7 @@ export default {
       verticalAlignOptions,
       selectKey,
       activeName: '',
+      predefineColors
     }
   },
   computed: {

@@ -3,7 +3,8 @@
     <p class="title">画布属性</p>
     <el-form style="padding: 20px">
       <el-form-item v-for="(key, index) in Object.keys(options)" :key="index" :label="options[key]">
-        <el-color-picker v-if="isIncludesColor(key)" v-model="canvasStyleData[key]" show-alpha></el-color-picker>
+        <el-color-picker v-if="isIncludesColor(key)" v-model="canvasStyleData[key]" show-alpha
+          :predefine="predefineColors"></el-color-picker>
         <el-input v-else v-model.number="canvasStyleData[key]" type="number" />
       </el-form-item>
     </el-form>
@@ -12,6 +13,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { predefineColors } from '@/utils/style'
 
 export default {
   data() {
@@ -22,6 +24,7 @@ export default {
         backgroundColor: '背景色',
         fontSize: '字体大小',
       },
+      predefineColors
     }
   },
   computed: mapState(['canvasStyleData']),

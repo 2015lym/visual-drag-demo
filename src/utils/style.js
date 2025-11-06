@@ -13,6 +13,21 @@ export function getShapeStyle(style) {
   return result
 }
 
+export const predefineColors = [
+  '#ffffff',
+  '#4e3e49',
+  '#3f4756',
+  '#2f6ac6',
+  '#eef3fb',
+  '#ffd700',
+  '#ff0000',
+  'hsv(51, 100, 98)',
+  'hsva(120, 40, 94, 0.5)',
+  'hsl(181, 100%, 37%)',
+  'hsla(209, 100%, 56%, 0.73)',
+  '#c7158577',
+];
+
 const needUnit = ['fontSize', 'width', 'height', 'top', 'left', 'borderWidth', 'letterSpacing', 'borderRadius']
 
 export function getSVGStyle(style, filter = []) {

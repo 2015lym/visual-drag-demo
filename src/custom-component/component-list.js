@@ -118,8 +118,10 @@ const list = [
     icon: 'zhixian',
     style: {
       width: 200,
-      height: 2,
-      backgroundColor: '#000',
+      height: 1,
+      borderColor: '#000',
+      borderWidth: 1,
+      borderStyle: 'solid',
     },
   },
   {

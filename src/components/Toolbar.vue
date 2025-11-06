@@ -24,7 +24,7 @@
 
       <el-button :disabled="!curComponent || curComponent.isLock" @click="lock"> 锁定 </el-button>
       <el-button :disabled="!curComponent || !curComponent.isLock" @click="unlock"> 解锁 </el-button>
-      <el-button @click="preview(true)">截图</el-button>
+      <!-- <el-button @click="preview(true)">截图</el-button> -->
 
       <div class="canvas-config">
         <span>分辨率</span>

@@ -28,7 +28,7 @@
               :label="styleMap[attr]"
             ></el-option>
           </el-select>
-          <el-color-picker v-if="isIncludesColor(e.key)" v-model="e.value" show-alpha></el-color-picker>
+          <el-color-picker v-if="isIncludesColor(e.key)" v-model="e.value" show-alpha :predefine="predefineColors"></el-color-picker>
           <el-select v-else-if="selectKey.includes(e.key)" v-model="e.value">
             <el-option
               v-for="option in optionMap[e.key]"
@@ -51,6 +51,7 @@
 
 <script>
 import { styleMap, optionMap, selectKey } from '@/utils/attr'
+import { predefineColors } from '@/utils/style'
 
 export default {
   data() {
@@ -64,6 +65,7 @@ export default {
       ],
       oldOpacity: '',
       oldBackgroundColor: '',
+      predefineColors
     }
   },
   computed: {
