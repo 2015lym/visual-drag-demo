@@ -8,12 +8,12 @@
           <el-checkbox v-model="curComponent.propValue.flip.vertical" label="vertical">垂直翻转</el-checkbox>
         </div>
       </el-form-item>
-      <!-- <el-form-item label="图片更换">
+      <el-form-item label="图片更换">
         <label for="inputAttr" class="insert">
           插入图片
           <input id="inputAttr" type="file" hidden @change="handleFileChange" />
         </label>
-      </el-form-item> -->
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -42,14 +42,11 @@ export default {
       reader.onload = (res) => {
         const fileResult = res.target.result
         console.log(res)
-        const url = URL.createObjectURL(fileResult)
-        this.curComponent.propValue.url = url
+        this.curComponent.propValue.url = fileResult
         // 修复重复上传同一文件，@change 不触发的问题
         $('#input').setAttribute('type', 'text')
         $('#input').setAttribute('type', 'file')
-        eventBus.$emit('imgChange')
       }
-
       reader.readAsDataURL(file)
     },
   }

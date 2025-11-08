@@ -23,8 +23,9 @@
           </el-form-item>
         </el-form>
       </el-collapse-item>
-      <Request v-if="curComponent.request"></Request>
-      <Linkage v-if="curComponent.linkage"></Linkage>
+      <!-- 不要数据来源和组件联动 -->
+      <!-- <Request v-if="curComponent.request"></Request> -->
+      <!-- <Linkage v-if="curComponent.linkage"></Linkage> -->
     </el-collapse>
   </div>
 </template>

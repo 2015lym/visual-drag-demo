@@ -1,34 +1,34 @@
 <template>
   <div>
     <div :class="isDarkMode ? 'dark toolbar' : 'toolbar'">
-      <el-button @click="onAceEditorChange">JSON</el-button>
-      <el-button @click="onImportJSON">导入</el-button>
-      <el-button @click="onExportJSON">导出</el-button>
-      <el-button @click="undo">撤消</el-button>
-      <el-button @click="redo">重做</el-button>
-      <label for="input" class="insert">
+      <!-- <el-button @click="onAceEditorChange">JSON</el-button> -->
+      <el-button icon="el-icon-upload2" @click="onImportJSON">导入</el-button>
+      <el-button icon="el-icon-download" @click="onExportJSON">导出</el-button>
+      <el-button icon="el-icon-refresh-left" @click="undo">撤消</el-button>
+      <el-button icon="el-icon-refresh-right" @click="redo">重做</el-button>
+      <!-- <label for="input" class="insert">
+        <i class="el-icon-picture"></i>
         插入图片
         <input id="input" type="file" hidden @change="handleFileChange" />
-      </label>
+      </label> -->
 
       <el-button style="margin-left: 10px" @click="preview(false)"> 预览 </el-button>
       <el-button @click="save">保存</el-button>
       <el-button @click="clearCanvas">清空画布</el-button>
-      <el-button :disabled="!areaData.components.length" @click="compose"> 组合 </el-button>
+      <!-- <el-button :disabled="!areaData.components.length" @click="compose"> 组合 </el-button>
       <el-button
         :disabled="!curComponent || curComponent.isLock || curComponent.component != 'Group'"
         @click="decompose"
       >
         拆分
-      </el-button>
+      </el-button> -->
 
-      <el-button :disabled="!curComponent || curComponent.isLock" @click="lock"> 锁定 </el-button>
-      <el-button :disabled="!curComponent || !curComponent.isLock" @click="unlock"> 解锁 </el-button>
+      <!-- <el-button :disabled="!curComponent || curComponent.isLock" @click="lock"> 锁定 </el-button> -->
+      <!-- <el-button :disabled="!curComponent || !curComponent.isLock" @click="unlock"> 解锁 </el-button> -->
       <!-- <el-button @click="preview(true)">截图</el-button> -->
 
       <div class="canvas-config">
         <span>分辨率</span>
-
         <!-- 新增：预设尺寸下拉 -->
         <el-select
           v-model="presetValue"
@@ -54,15 +54,15 @@
       </div>
       <div class="canvas-config"> <span>画布比例</span> <input v-model="scale" @input="handleScaleChange" /> % </div>
 
-      <el-switch
+      <!-- <el-switch
         v-model="switchValue"
         class="dark-mode-switch"
         active-icon-class="el-icon-sunny"
         inactive-icon-class="el-icon-moon"
         active-color="#000"
         @change="handleToggleDarkMode"
-      ></el-switch>
-      <el-dropdown
+      ></el-switch> -->
+      <!-- <el-dropdown
         v-if="showComponentAlign"
         :hide-on-click="false"
         class="align-dropdown"
@@ -83,7 +83,7 @@
             {{ item.label }}
           </el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
     </div>
 
     <!-- 预览 -->
@@ -109,7 +109,8 @@
         >
           <el-button type="primary">选择 JSON 文件</el-button>
         </el-upload>
-        <el-button type="primary" @click="processJSON">确 定</el-button>
+        <el-button v-show="!isExport" type="primary" @click="processJSON">确 定</el-button>
+        <el-button v-show="isExport" type="primary" @click="processJSON">下 载</el-button>
       </div>
     </el-dialog>
   </div>
