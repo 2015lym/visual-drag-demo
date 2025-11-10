@@ -52,4 +52,13 @@ module.exports = {
     'vuejs-accessibility/alt-text': 'off',
     'vue/no-mutating-props': 'off',
   },
+  overrides: [
+    {
+      files: ['*.vue'],
+      rules: {
+        'vue/order-in-components': 'off',
+        'object-shorthand': 'off',
+      },
+    },
+  ],
 }
