@@ -15,5 +15,8 @@ export default {
   width: 100%;
   height: 100%;
   overflow: auto;
+  border-bottom: 0 !important;
+  border-left: 0 !important;
+  border-right: 0 !important;
 }
 </style>

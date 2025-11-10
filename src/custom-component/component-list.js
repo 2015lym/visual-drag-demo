@@ -120,8 +120,8 @@ const list = [
       width: 200,
       height: 1,
       borderColor: '#000',
-      borderWidth: 1,
-      borderStyle: 'solid',
+      borderWidth: 2,
+      borderStyle: 'dashed',
     },
   },
   //   {
