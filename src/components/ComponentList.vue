@@ -1,7 +1,8 @@
 <template>
   <div class="component-list" @dragstart="handleDragStart">
     <div v-for="(item, index) in componentList" :key="index" class="list" draggable :data-index="index">
-      <span v-if="item.icon.substr(0, 2) === 'el'" :class="item.icon"></span>
+      <span v-if="item.iconStr" :class="item.icon">{{ item.iconStr }}</span>
+      <span v-else-if="item.icon.substr(0, 2) === 'el'" :class="item.icon"></span>
       <span v-else class="iconfont" :class="'icon-' + item.icon"></span>
     </div>
   </div>

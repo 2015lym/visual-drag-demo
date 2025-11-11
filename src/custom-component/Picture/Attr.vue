@@ -10,7 +10,7 @@
       </el-form-item>
       <el-form-item label="图片更换">
         <label for="inputAttr" class="insert">
-          插入图片
+          选择图片
           <input id="inputAttr" type="file" hidden @change="handleFileChange" />
         </label>
       </el-form-item>

@@ -124,6 +124,18 @@ const list = [
       borderStyle: 'dashed',
     },
   },
+    {
+    component: 'QrCode',
+    label: '二维码',
+    propValue: {
+      url: 'https://www.baidu.com',
+    },
+    icon: 'erweima',
+    style: {
+      width: 200,
+      height: 200,
+    },
+  },
   //   {
   //     component: 'CircleShape',
   //     label: '圆形',

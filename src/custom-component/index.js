@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-const components = ['CircleShape', 'Picture', 'VText', 'VButton', 'Group', 'RectShape', 'LineShape', 'VTable', 'VChart']
+const components = ['CircleShape', 'Picture', 'VText', 'VButton', 'Group', 'RectShape', 'LineShape', 'VTable', 'VChart', 'QrCode']
 
 components.forEach((key) => {
   Vue.component(key, () => import(`@/custom-component/${key}/Component`))

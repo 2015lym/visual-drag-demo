@@ -1,0 +1,23 @@
+{
+  "id": "5061977",
+  "name": "template",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1719345",
+      "name": "预览",
+      "font_class": "yulan",
+      "unicode": "e7b9",
+      "unicode_decimal": 59321
+    },
+    {
+      "icon_id": "7874501",
+      "name": "二维码",
+      "font_class": "erweima",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    }
+  ]
+}
