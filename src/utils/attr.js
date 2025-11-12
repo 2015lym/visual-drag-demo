@@ -88,3 +88,17 @@ export const optionMap = {
   borderStyle: borderStyleOptions,
   verticalAlign: verticalAlignOptions,
 }
+
+export const dataFields = [
+  { label: '无', value: '0' },
+  { label: '床位号显示', value: 'bedName' },
+  { label: '科室名称', value: 'deptName' },
+  { label: '姓名', value: 'name' },
+  { label: '性别', value: 'sex' },
+  { label: '年龄', value: 'age' },
+  { label: '医保类型', value: 'healthInsurance' },
+  { label: '病人ID', value: 'patientId' },
+  { label: '入院日期', value: 'admissionDate' },
+  { label: '医生名字', value: 'doctor' },
+  { label: '护士名字', value: 'nurse' },
+]

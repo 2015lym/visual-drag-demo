@@ -1,11 +1,7 @@
 <template>
   <div ref="container" class="bg">
     <div class="canvas-container" :style="getCanvasStyle(canvasStyleData)">
-      <ComponentWrapper
-        v-for="(item, index) in copyData"
-        :key="index"
-        :config="item"
-      />
+      <ComponentWrapper v-for="(item, index) in copyData" :key="index" :config="item" />
     </div>
   </div>
 </template>
@@ -35,8 +31,8 @@ export default {
   },
   mounted() {
     this.fetchData().then(() => {
-      this.startRandomUpdate()
     })
+    window.addEventListener('message', this.handleMessage)
   },
   beforeDestroy() {
     if (this.timer) clearInterval(this.timer)
@@ -60,7 +56,18 @@ export default {
         console.error('获取数据失败:', err)
       }
     },
-
+    handleMessage(event) {
+      console.log('[子页面收到消息]', event.data)
+      if (event.data?.type === 'dataBind') {
+        this.copyData.forEach(item => {
+          if (event.data?.component === 'QrCode' && item.dataBind === 'QrCode') {
+            item.propValue = event.data?.data
+          } else if (event.data?.component === 'VText' && item.dataBind === 'VText') {
+            item.propValue = event.data?.data
+          }
+        })
+      }
+    },
     // 每 2 秒更新随机数
     startRandomUpdate() {
       this.timer = setInterval(() => {
@@ -69,24 +76,6 @@ export default {
           item.propValue = Math.floor(Math.random() * 100) // 0~99 随机数
         })
       }, 2000)
-    },
-
-    close() {
-      this.$emit('close')
-    },
-
-    htmlToImage() {
-      toPng(this.$refs.container.querySelector('.canvas'))
-        .then((dataUrl) => {
-          const a = document.createElement('a')
-          a.setAttribute('download', 'screenshot')
-          a.href = dataUrl
-          a.click()
-        })
-        .catch((error) => {
-          console.error('oops, something went wrong!', error)
-        })
-        .finally(this.close)
     },
   },
 }

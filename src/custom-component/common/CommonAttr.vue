@@ -21,6 +21,16 @@
             />
             <el-input v-else v-model.number="curComponent.style[key]" type="number" />
           </el-form-item>
+          <el-form-item label="数据绑定" v-if="curComponent.dataBind">
+            <el-select v-model="curComponent.dataBind">
+              <el-option
+                v-for="item in dataFields"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
       </el-collapse-item>
       <!-- 不要数据来源和组件联动 -->
@@ -38,6 +48,7 @@ import {
   verticalAlignOptions,
   selectKey,
   optionMap,
+  dataFields,
 } from '@/utils/attr'
 import Request from './Request'
 import Linkage from './Linkage'
@@ -47,6 +58,7 @@ export default {
   components: { Request, Linkage },
   data() {
     return {
+      dataFields,
       optionMap,
       styleData,
       textAlignOptions,

@@ -28,6 +28,7 @@ export const commonAttr = {
 const list = [
   {
     component: 'VText',
+    dataBind: '0',
     label: '文字',
     propValue: '双击编辑文字',
     icon: 'wenben',
@@ -54,6 +55,7 @@ const list = [
   },
   {
     component: 'VButton',
+    dataBind: '0',
     label: '按钮',
     propValue: '按钮',
     icon: 'button',
@@ -74,6 +76,7 @@ const list = [
   },
   {
     component: 'Picture',
+    dataBind: '0',
     label: '图片',
     icon: 'tupian',
     propValue: {
@@ -91,6 +94,7 @@ const list = [
   },
   {
     component: 'RectShape',
+    dataBind: '0',
     label: '矩形',
     propValue: '&nbsp;',
     icon: 'juxing',
@@ -126,6 +130,7 @@ const list = [
   },
     {
     component: 'QrCode',
+    dataBind: '0',
     label: '二维码',
     propValue: {
       url: 'https://www.baidu.com',
