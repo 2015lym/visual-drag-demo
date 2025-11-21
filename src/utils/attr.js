@@ -91,14 +91,31 @@ export const optionMap = {
 
 export const dataFields = [
   { label: '无', value: '0' },
-  { label: '床位号显示', value: 'bedName' },
+  { label: '床位号', value: 'bedName' },
   { label: '科室名称', value: 'deptName' },
-  { label: '姓名', value: 'name' },
-  { label: '性别', value: 'sex' },
-  { label: '年龄', value: 'age' },
+  { label: '患者ID', value: 'patientId' },
+  { label: '患者姓名', value: 'name' },
+  { label: '患者性别', value: 'sex' },
+  { label: '患者年龄', value: 'age' },
   { label: '医保类型', value: 'healthInsurance' },
-  { label: '病人ID', value: 'patientId' },
+  { label: '患者性别+年龄+医保类型', value: 'sexagehealthInsurance' },
   { label: '入院日期', value: 'admissionDate' },
-  { label: '医生名字', value: 'doctor' },
-  { label: '护士名字', value: 'nurse' },
+  { label: '医生姓名', value: 'doctor' },
+  { label: '护士姓名', value: 'nurse' },
+]
+
+export const eventFields = [
+  { label: '无', value: '0' },
+  { label: '更多选项', value: 'showMenus' },
+  { label: '护理工具', value: 'nursingTools' },
+  { label: '扫码点餐', value: 'scanOrder' },
+  { label: '健康宣教', value: 'healthEducation' },
+  { label: '历史消息', value: 'historyMessage' },
+  { label: '检查手术', value: 'examSurgery' },
+  { label: '问卷调查', value: 'survey' },
+  { label: '退出应用', value: 'exitApp' },
+  { label: '呼叫', value: 'call' },
+  { label: '定位', value: 'location' },
+  { label: '入院须知', value: 'admissionNotice' },
+  { label: '费用查询', value: 'feeQuery' }
 ]

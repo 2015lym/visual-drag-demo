@@ -21,7 +21,7 @@
             />
             <el-input v-else v-model.number="curComponent.style[key]" type="number" />
           </el-form-item>
-          <el-form-item label="数据绑定" v-if="curComponent.dataBind">
+          <!-- <el-form-item label="数据绑定" v-if="curComponent.dataBind">
             <el-select v-model="curComponent.dataBind">
               <el-option
                 v-for="item in dataFields"
@@ -30,7 +30,7 @@
                 :value="item.value"
               ></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
       </el-collapse-item>
       <!-- 不要数据来源和组件联动 -->

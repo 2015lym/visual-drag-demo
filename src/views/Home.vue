@@ -30,13 +30,13 @@
       <!-- 右侧属性列表 -->
       <section :class="rightList ? 'right active' : 'right inactive'">
         <el-tabs v-if="curComponent" v-model="activeName">
-          <el-tab-pane label="属性" name="attr">
+          <el-tab-pane label="样式属性" name="attr">
             <component :is="curComponent.component + 'Attr'" />
           </el-tab-pane>
           <!-- <el-tab-pane label="动画" name="animation" style="padding-top: 20px">
             <AnimationList />
           </el-tab-pane> -->
-          <el-tab-pane label="事件" name="events" style="padding-top: 20px">
+          <el-tab-pane label="数据/事件绑定" name="events" style="padding-top: 20px">
             <EventList />
           </el-tab-pane>
         </el-tabs>

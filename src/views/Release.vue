@@ -33,6 +33,9 @@ export default {
     this.fetchData().then(() => {
     })
     window.addEventListener('message', this.handleMessage)
+    window.addEventListener('load', () => {
+      parent.postMessage({ type: 'iframeReady' }, '*')
+    })
   },
   beforeDestroy() {
     if (this.timer) clearInterval(this.timer)
@@ -60,10 +63,9 @@ export default {
       console.log('[子页面收到消息]', event.data)
       if (event.data?.type === 'dataBind') {
         this.copyData.forEach(item => {
-          if (event.data?.component === 'QrCode' && item.dataBind === 'QrCode') {
-            item.propValue = event.data?.data
-          } else if (event.data?.component === 'VText' && item.dataBind === 'VText') {
-            item.propValue = event.data?.data
+          // 不用一一对应
+          if (event.data?.component && item.dataBind === event.data.component) {
+            item.propValue = event.data.data
           }
         })
       }

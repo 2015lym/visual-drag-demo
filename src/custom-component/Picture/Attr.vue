@@ -44,8 +44,13 @@ export default {
         console.log(res)
         this.curComponent.propValue.url = fileResult
         // 修复重复上传同一文件，@change 不触发的问题
-        $('#input').setAttribute('type', 'text')
-        $('#input').setAttribute('type', 'file')
+        const input = document.getElementById('inputAttr');
+        if (input) {
+          input.setAttribute('type', 'text');
+          input.setAttribute('type', 'file');
+        } else {
+          console.warn('未找到文件输入元素，无法重置其值')
+        }
       }
       reader.readAsDataURL(file)
     },

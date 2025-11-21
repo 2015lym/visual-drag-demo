@@ -1,16 +1,42 @@
 <template>
   <div class="event-list">
     <div class="div-events">
-      <el-button @click="isShowEvent = true">添加事件</el-button>
+      <!-- <el-button @click="isShowEvent = true">添加事件</el-button>
       <div>
         <el-tag v-for="event in Object.keys(curComponent.events)" :key="event" closable @close="removeEvent(event)">
           {{ event }}
         </el-tag>
-      </div>
+      </div> -->
+      <el-form>
+        <el-form-item label="数据绑定" v-if="curComponent.dataBind">
+          <el-select v-model="curComponent.dataBind">
+            <el-option
+              v-for="item in dataFields"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="事件绑定">
+          <el-select
+            v-model="curComponent.events.redirect"
+            placeholder="请选择事件"
+          >
+            <el-option
+              v-for="item in eventFields"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+      </el-form>
     </div>
 
+
     <!-- 选择事件 -->
-    <Modal v-model="isShowEvent">
+    <!-- <Modal v-model="isShowEvent">
       <el-tabs v-model="eventActiveName">
         <el-tab-pane
           v-for="item in eventList"
@@ -36,7 +62,7 @@
           <el-button style="margin-top: 20px" @click="addEvent(item.key, item.param)">确定</el-button>
         </el-tab-pane>
       </el-tabs>
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 
@@ -44,6 +70,10 @@
 import { mapState } from 'vuex'
 import Modal from '@/components/Modal'
 import { eventList } from '@/utils/events'
+import {
+  dataFields,
+  eventFields,
+} from '@/utils/attr'
 
 export default {
   components: { Modal },
@@ -53,9 +83,12 @@ export default {
       eventURL: '',
       eventActiveName: 'redirect',
       eventList,
+      dataFields,
+      eventFields,
     }
   },
   computed: mapState(['curComponent']),
+
   methods: {
     addEvent(event, param) {
       this.isShowEvent = false

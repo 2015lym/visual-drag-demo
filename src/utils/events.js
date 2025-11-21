@@ -3,6 +3,7 @@ const events = {
   redirect(url) {
     if (url) {
       // window.location.href = url
+      console.log('跳转路径： ', url)
       window.parent.postMessage({ type: 'goPage', data: url }, '*')
     }
   },
