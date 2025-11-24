@@ -128,17 +128,67 @@ const list = [
       borderStyle: 'dashed',
     },
   },
-    {
+  {
     component: 'QrCode',
     dataBind: '0',
     label: '二维码',
+    icon: 'erweima',
     propValue: {
       url: 'https://www.baidu.com',
     },
-    icon: 'erweima',
     style: {
       width: 200,
       height: 200,
+    },
+  },
+  {
+    component: 'NursingTags',
+    dataBind: '0',
+    label: '护理项',
+    propValue: [
+      {
+        "itemName": "引流量<100ml/d，禁受压",
+        "backgroundColor": "#bf46c8",
+        "fontColor": "#ef8d31",
+        "width": "120px"
+      },
+      {
+        "itemName": "手动录入",
+        "backgroundColor": "#4699c8",
+        "fontColor": "#ffffff",
+        "width": "120px"
+      },
+      {
+        "itemName": "防止压疮",
+        "backgroundColor": "#5946c8",
+        "fontColor": "#d63333",
+        "width": "120px"
+      },
+      {
+        "itemName": "防呛水",
+        "backgroundColor": "#bdc846",
+        "fontColor": "#7baa5f",
+        "width": "120px"
+      },
+      {
+        "itemName": "免疫抑制剂血药浓度（他克莫司5.2ng/ml）",
+        "backgroundColor": "#d6dd30",
+        "fontColor": "#2ed2dd",
+        "width": "120px"
+      }
+    ],
+    iconStr: '护理项',
+    style: {
+      width: 760,
+      height: 300,
+      fontSize: 43,
+      fontWeight: 400,
+      letterSpacing: 0,
+      borderColor: '#000',
+      borderWidth: 1,
+      backgroundColor: '',
+      borderStyle: 'none',
+      borderRadius: '',
     },
   },
   //   {

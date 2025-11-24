@@ -57,6 +57,10 @@ export const textAlignOptions = [
 
 export const borderStyleOptions = [
   {
+    label: '无',
+    value: 'none',
+  },
+  {
     label: '实线',
     value: 'solid',
   },
