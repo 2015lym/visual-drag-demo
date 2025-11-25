@@ -143,7 +143,7 @@ const list = [
   },
   {
     component: 'NursingTags',
-    dataBind: '0',
+    dataBind: 'NursingTags',
     label: '护理项',
     propValue: [
       {
@@ -186,7 +186,7 @@ const list = [
       letterSpacing: 0,
       borderColor: '#000',
       borderWidth: 1,
-      backgroundColor: '',
+      backgroundColor: 'rgba(255, 255, 255, 0)',
       borderStyle: 'none',
       borderRadius: '',
     },

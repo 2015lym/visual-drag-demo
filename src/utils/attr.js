@@ -106,6 +106,8 @@ export const dataFields = [
   { label: '入院日期', value: 'admissionDate' },
   { label: '医生姓名', value: 'doctor' },
   { label: '护士姓名', value: 'nurse' },
+  { label: '医疗消息', value: 'nurseMessage' },
+  { label: '护理项目', value: 'nursingTags' },
 ]
 
 export const eventFields = [

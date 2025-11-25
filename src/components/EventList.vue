@@ -9,7 +9,7 @@
       </div> -->
       <el-form>
         <el-form-item label="数据绑定" v-if="curComponent.dataBind">
-          <el-select v-model="curComponent.dataBind">
+          <el-select v-model="curComponent.dataBind" :disabled="dataDisabledList.includes(curComponent.component)">
             <el-option
               v-for="item in dataFields"
               :key="item.value"
@@ -21,14 +21,15 @@
         <el-form-item label="事件绑定">
           <el-select
             v-model="curComponent.events.redirect"
-            placeholder="请选择事件"
+            placeholder="无事件"
+            :disabled="eventDisabledList.includes(curComponent.component)"
           >
             <el-option
               v-for="item in eventFields"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            />
+            ></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -85,6 +86,8 @@ export default {
       eventList,
       dataFields,
       eventFields,
+      dataDisabledList: ['NursingTags', 'LineShape', 'Picture', 'QrCode'],
+      eventDisabledList: ['NursingTags', 'LineShape']
     }
   },
   computed: mapState(['curComponent']),

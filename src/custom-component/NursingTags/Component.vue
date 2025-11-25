@@ -30,7 +30,7 @@
         :key="'add-button'"
       >
         <div class="nursing-lowcode__add">
-          <svg viewBox="0 0 24 24" width="28" height="28" focusable="false" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="50" height="50" focusable="false" aria-hidden="true">
             <path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" fill="currentColor"/>
           </svg>
         </div>
@@ -48,7 +48,7 @@ export default {
       required: true,
       default: () => ([])
     },
-        element: { type: Object, default: () => ({ style: { width: 0, height: 0 } }) },
+    element: { type: Object, default: () => ({ style: { width: 0, height: 0 } }) },
 
   },
   computed: {
@@ -77,9 +77,9 @@ export default {
       const reg = /^[A-Za-z0-9\u2160-\u216B:：\/.<>₂₀₁₂₃₄₅₆₇₈₉\-\+\(\)]+$/;
       return reg.test(seg);
     },
-    // add 按钮：不包含业务，仅发出事件，外部可监听并处理
     onAddClick() {
-      this.$emit("add-click");
+      console.log('addTags button clicked');
+      window.parent.postMessage({ type: 'goPage', data: 'addTags' }, '*')
     },
     // 如果标签对象包含样式字段（backgroundColor/fontColor/width），则应用内联样式
     getItemInlineStyle(tag = {}) {
@@ -95,10 +95,6 @@ export default {
         //   style.width = String(tag.width);
         // }
       }
-
-      // 你也可以设置高度或 minHeight 等：
-      // style.minHeight = '72px'
-
       return style;
     }
   }
@@ -106,7 +102,6 @@ export default {
 </script>
 
 <style scoped>
-/* 根容器：按照 element 的像素宽高撑开 */
 .nursing-lowcode {
   box-sizing: border-box;
   overflow: hidden;
@@ -114,7 +109,6 @@ export default {
   border-radius: 6px;
   padding: 8px;
   border: 1px solid #e6eaf0;
-  overflow-x: scroll;
 }
 
 /* 列表纵向排列，竖向滚动 */
@@ -124,8 +118,8 @@ export default {
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  padding-right: 6px;
   box-sizing: border-box;
+  overflow-x: scroll;
 }
 
 /* 单个 tag 项 */
@@ -155,7 +149,7 @@ export default {
 
 /* add 图标颜色 */
 .nursing-lowcode__add path {
-  fill: #3b7edb;
+  fill: black;
 }
 
 /* 段落样式 */
