@@ -51,6 +51,8 @@ export default {
         } else {
           console.warn('未找到文件输入元素，无法重置其值')
         }
+        // 支持撤销图片设置
+        this.$store.commit('recordSnapshot');
       }
       reader.readAsDataURL(file)
     },

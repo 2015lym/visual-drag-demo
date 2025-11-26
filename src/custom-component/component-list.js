@@ -144,7 +144,7 @@ const list = [
   {
     component: 'NursingTags',
     dataBind: 'NursingTags',
-    label: '护理项',
+    label: '护理文书',
     propValue: [
       {
         "itemName": "引流量<100ml/d，禁受压",
@@ -177,7 +177,7 @@ const list = [
         "width": "120px"
       }
     ],
-    iconStr: '护理项',
+    iconStr: '护理文书',
     style: {
       width: 760,
       height: 300,
