@@ -1,6 +1,6 @@
 <template>
   <!-- 外层容器始终跟随画布的组件宽高 -->
-  <div class="qr-wrap" :style="{ width: width + 'px', height: height + 'px' }">
+  <div class="qr-wrap">
     <qrcode-vue
       :value="propValue.url || ''"
       :size="qrSize"

@@ -1,37 +1,24 @@
 <template>
-  <div class="nursing-lowcode" :style="{ width: width + 'px', height: height + 'px' }">
-    <div class="nursing-lowcode__list">
-      <div
-        class="nursing-lowcode__item"
-        v-for="(tag, idx) in propValue"
-        :key="`tag-${idx}`"
-        :style="getItemInlineStyle(tag)"
-      >
-          <!-- splitString 的每个 segment 渲染为真实元素并带唯一 key -->
-          <template v-for="(seg, sidx) in splitString(tag.itemName)">
-            <div
-              v-if="isHorizontalSegment(seg)"
-              :key="`h-${idx}-${sidx}`"
-              class="nursing-lowcode__seg nursing-lowcode__seg--horizontal"
-            >{{ seg }}</div>
+  <div class="nursing-lowcode">
+    <div class="nursing-lowcode__list"
+      :style="{ padding: element.style.padding + 'px', gap: element.style.nursingGap + 'px' }">
+      <div class="nursing-lowcode__item" v-for="(tag, idx) in propValue" :key="`tag-${idx}`"
+        :style="getItemInlineStyle(tag)">
+        <!-- splitString 的每个 segment 渲染为真实元素并带唯一 key -->
+        <template v-for="(seg, sidx) in splitString(tag.itemName)">
+          <div v-if="isHorizontalSegment(seg)" :key="`h-${idx}-${sidx}`"
+            class="nursing-lowcode__seg nursing-lowcode__seg--horizontal">{{ seg }}</div>
 
-            <div
-              v-else
-              :key="`v-${idx}-${sidx}`"
-              class="nursing-lowcode__seg nursing-lowcode__seg--vertical"
-            >{{ seg }}</div>
-          </template>
+          <div v-else :key="`v-${idx}-${sidx}`" class="nursing-lowcode__seg nursing-lowcode__seg--vertical">{{ seg }}
+          </div>
+        </template>
       </div>
 
       <!-- add 按钮（仅 emit 事件，由外部处理） -->
-      <div
-        class="nursing-lowcode__item nursing-lowcode__item--add"
-        @click="onAddClick"
-        :key="'add-button'"
-      >
+      <div class="nursing-lowcode__item nursing-lowcode__item--add" @click="onAddClick" :key="'add-button'">
         <div class="nursing-lowcode__add">
           <svg viewBox="0 0 24 24" width="50" height="50" focusable="false" aria-hidden="true">
-            <path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" fill="currentColor"/>
+            <path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" fill="currentColor" />
           </svg>
         </div>
       </div>
@@ -48,22 +35,10 @@ export default {
       required: true,
       default: () => ([])
     },
-    element: { type: Object, default: () => ({ style: { width: 0, height: 0 } }) },
-
-  },
-  computed: {
-    // 画布尺寸（像 QR 组件那样）
-    width() {
-      return Number(this.element?.style?.width) || 700;
+    element: {
+      type: Object,
+      default: () => { },
     },
-    height() {
-      return Number(this.element?.style?.height) || 300;
-    },
-    // 优先使用 propValue.tags，否则用默认数据
-    // nursingTags() {
-    //   const tags = this.propValue && Array.isArray(this.propValue.tags) ? this.propValue.tags : [];
-    //   return tags.length ? tags : this.defaultTags;
-    // }
   },
   methods: {
     // 保留 splitString：连续英数字/罗马数字/某些符号 为一段；单个中文字符为一段
@@ -81,7 +56,6 @@ export default {
       console.log('addTags button clicked');
       window.parent.postMessage({ type: 'goPage', data: 'addTags' }, '*')
     },
-    // 如果标签对象包含样式字段（backgroundColor/fontColor/width），则应用内联样式
     getItemInlineStyle(tag = {}) {
       const style = {};
       if (tag.backgroundColor) style.backgroundColor = tag.backgroundColor;
@@ -95,6 +69,7 @@ export default {
         //   style.width = String(tag.width);
         // }
       }
+      // style.gap = this.element.style.nursingGap + 'px';
       return style;
     }
   }
@@ -105,10 +80,6 @@ export default {
 .nursing-lowcode {
   box-sizing: border-box;
   overflow: hidden;
-  background: #f7f9fc;
-  border-radius: 6px;
-  padding: 8px;
-  border: 1px solid #e6eaf0;
 }
 
 /* 列表纵向排列，竖向滚动 */

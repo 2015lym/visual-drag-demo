@@ -19,6 +19,12 @@
               type="number"
               @input="setFontSize(curComponent)"
             />
+            <el-input
+              v-else-if="key == 'width' || key == 'height'"
+              v-model.number="curComponent.style[key]"
+              type="number"
+              @input="setQrCodeWH(curComponent, key)"
+            />
             <el-input v-else v-model.number="curComponent.style[key]" type="number" />
           </el-form-item>
           <!-- <el-form-item label="数据绑定" v-if="curComponent.dataBind">
@@ -94,7 +100,9 @@ export default {
     setInitial(style) {
       this.initialStyle = JSON.parse(JSON.stringify(style))
     },
-    setFontSize() {
+    setFontSize(curComponent, key) {
+      console.log('setFontSize called');
+      console.log(curComponent, key);
       const proportion = this.curComponent.style.fontSize / this.initialStyle.fontSize
       const updatedStyle = {
         width: (proportion * this.initialStyle.width).toFixed(4),
@@ -104,6 +112,16 @@ export default {
       this.curComponent.style = { ...this.curComponent.style, ...updatedStyle }
       this.$store.commit('setShapeStyle', this.curComponent.style)
       this.$store.commit('recordSnapshot')
+    },
+    // 二维码设置宽高的时候，另一个属性自动相等
+    setQrCodeWH(component, key) {
+      const newValue = component.style[key]
+      if (component.component === 'QrCode') {
+        const otherKey = key === 'width' ? 'height' : 'width'
+        component.style[otherKey] = newValue
+        this.$store.commit('setShapeStyle', component.style)
+        this.$store.commit('recordSnapshot')
+      }
     },
     onChange() {
       this.curComponent.collapseName = this.activeName

@@ -130,7 +130,7 @@ const list = [
   },
   {
     component: 'QrCode',
-    dataBind: '0',
+    dataBind: 'qrCode',
     label: '二维码',
     icon: 'erweima',
     propValue: {
@@ -143,7 +143,7 @@ const list = [
   },
   {
     component: 'NursingTags',
-    dataBind: 'NursingTags',
+    dataBind: 'nursingTags',
     label: '护理文书',
     propValue: [
       {
@@ -185,10 +185,12 @@ const list = [
       fontWeight: 400,
       letterSpacing: 0,
       borderColor: '#000',
-      borderWidth: 1,
+      borderWidth: 0,
       backgroundColor: 'rgba(255, 255, 255, 0)',
       borderStyle: 'none',
       borderRadius: '',
+      padding: 8,
+      nursingGap: 8
     },
   },
   //   {

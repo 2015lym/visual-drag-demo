@@ -17,6 +17,8 @@ export const styleData = [
   { key: 'textAlign', label: '左右对齐' },
   { key: 'verticalAlign', label: '上下对齐' },
   { key: 'opacity', label: '不透明度' },
+  { key: 'padding', label: '内间距' },
+  { key: 'nursingGap', label: '护理文书间距' },
 ]
 
 export const styleMap = {
@@ -106,8 +108,10 @@ export const dataFields = [
   { label: '入院日期', value: 'admissionDate' },
   { label: '医生姓名', value: 'doctor' },
   { label: '护士姓名', value: 'nurse' },
+  { label: '二维码', value: 'qrCode' },
   { label: '医疗消息', value: 'nurseMessage' },
   { label: '护理文书', value: 'nursingTags' },
+  { label: '输液消息', value: 'infusion' },
 ]
 
 export const eventFields = [
