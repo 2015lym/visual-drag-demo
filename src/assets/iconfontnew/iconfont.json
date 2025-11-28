@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "18931798",
+      "name": "输液",
+      "font_class": "shuye",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "1719345",
       "name": "预览",
       "font_class": "yulan",

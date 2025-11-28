@@ -86,8 +86,8 @@ export default {
       eventList,
       dataFields,
       eventFields,
-      dataDisabledList: ['NursingTags', 'LineShape', 'Picture', 'QrCode'],
-      eventDisabledList: ['NursingTags', 'LineShape']
+      dataDisabledList: ['NursingTags', 'LineShape', 'Picture', 'QrCode', 'Infusion'],
+      eventDisabledList: ['NursingTags', 'LineShape', 'Infusion']
     }
   },
   computed: mapState(['curComponent']),

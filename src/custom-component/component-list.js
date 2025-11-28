@@ -145,6 +145,7 @@ const list = [
     component: 'NursingTags',
     dataBind: 'nursingTags',
     label: '护理文书',
+    iconStr: '护理文书',
     propValue: [
       {
         "itemName": "引流量<100ml/d，禁受压",
@@ -177,7 +178,6 @@ const list = [
         "width": "120px"
       }
     ],
-    iconStr: '护理文书',
     style: {
       width: 760,
       height: 300,
@@ -191,6 +191,34 @@ const list = [
       borderRadius: '',
       padding: 8,
       nursingGap: 8
+    },
+  },
+  {
+    component: 'Infusion',
+    dataBind: 'infusion',
+    label: '输液',
+    icon: 'shuye',
+    propValue: {
+      infusion: true,
+      infusionCreatedAt: '',
+      volume: '',
+      infusionSetSpeed: '',
+      infusionStatusName: '监控',
+      valveLock: '关',
+      batteryRate: '80'
+    },
+    style: {
+      width: 280,
+      height: 160,
+      fontSize: 20,
+      fontWeight: '400',
+      letterSpacing: 0,
+      color: '#000',
+      borderColor: '#000',
+      borderWidth: 0,
+      backgroundColor: 'rgba(238, 243, 251, 1)',
+      borderStyle: 'none',
+      borderRadius: '',
     },
   },
   //   {

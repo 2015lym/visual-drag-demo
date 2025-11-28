@@ -40,6 +40,8 @@ export const styleMap = {
   textAlign: '左右对齐',
   verticalAlign: '上下对齐',
   opacity: '不透明度',
+  padding: '内间距',
+  nursingGap: '护理文书间距',
 }
 
 export const textAlignOptions = [
