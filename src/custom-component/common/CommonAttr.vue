@@ -4,8 +4,8 @@
       <el-collapse-item title="通用样式" name="style">
         <el-form>
           <el-form-item v-for="({ key, label }, index) in styleKeys" :key="index" :label="label">
-            <el-color-picker v-if="isIncludesColor(key)" v-model="curComponent.style[key]" show-alpha :predefine="predefineColors"></el-color-picker>
-            <el-select v-else-if="selectKey.includes(key)" v-model="curComponent.style[key]">
+            <el-color-picker v-if="isIncludesColor(key)" v-model="curComponent.style[key]" show-alpha :predefine="predefineColors" @change="recordStyleChange"></el-color-picker>
+            <el-select v-else-if="selectKey.includes(key)" v-model="curComponent.style[key]" @change="recordStyleChange">
               <el-option
                 v-for="item in optionMap[key]"
                 :key="item.value"
@@ -25,18 +25,8 @@
               type="number"
               @input="setQrCodeWH(curComponent, key)"
             />
-            <el-input v-else v-model.number="curComponent.style[key]" type="number" />
+            <el-input v-else v-model.number="curComponent.style[key]" type="number" @change="recordStyleChange"/>
           </el-form-item>
-          <!-- <el-form-item label="数据绑定" v-if="curComponent.dataBind">
-            <el-select v-model="curComponent.dataBind">
-              <el-option
-                v-for="item in dataFields"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              ></el-option>
-            </el-select>
-          </el-form-item> -->
         </el-form>
       </el-collapse-item>
       <!-- 不要数据来源和组件联动 -->
@@ -54,7 +44,6 @@ import {
   verticalAlignOptions,
   selectKey,
   optionMap,
-  dataFields,
 } from '@/utils/attr'
 import Request from './Request'
 import Linkage from './Linkage'
@@ -64,7 +53,6 @@ export default {
   components: { Request, Linkage },
   data() {
     return {
-      dataFields,
       optionMap,
       styleData,
       textAlignOptions,
@@ -126,7 +114,9 @@ export default {
     onChange() {
       this.curComponent.collapseName = this.activeName
     },
-
+    recordStyleChange() {
+      this.$store.commit('recordSnapshot')
+    },
     isIncludesColor(str) {
       return str.toLowerCase().includes('color')
     },

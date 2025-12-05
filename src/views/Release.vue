@@ -70,15 +70,7 @@ export default {
         })
       }
     },
-    // 每 2 秒更新随机数
-    startRandomUpdate() {
-      this.timer = setInterval(() => {
-        this.copyData.forEach(item => {
-          // 这里假设每个 item 都有 propValue 属性
-          item.propValue = Math.floor(Math.random() * 100) // 0~99 随机数
-        })
-      }, 2000)
-    },
+
   },
 }
 </script>
