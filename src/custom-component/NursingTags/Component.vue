@@ -1,7 +1,7 @@
 <template>
   <div class="nursing-lowcode">
     <div class="nursing-lowcode__list"
-      :style="{ padding: element.style.padding + 'px', gap: element.style.nursingGap + 'px' }">
+      :style="{ padding: element.style.padding + 'px', gap: element.style.itemGap + 'px' }">
       <div class="nursing-lowcode__item" v-for="(tag, idx) in propValue" :key="`tag-${idx}`"
         :style="getItemInlineStyle(tag)">
         <!-- splitString 的每个 segment 渲染为真实元素并带唯一 key -->

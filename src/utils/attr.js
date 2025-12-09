@@ -18,7 +18,7 @@ export const styleData = [
   { key: 'verticalAlign', label: '上下对齐' },
   { key: 'opacity', label: '不透明度' },
   { key: 'padding', label: '内间距' },
-  { key: 'nursingGap', label: '护理文书间距' },
+  { key: 'itemGap', label: '内容间距' },
 ]
 
 export const styleMap = {
@@ -41,7 +41,7 @@ export const styleMap = {
   verticalAlign: '上下对齐',
   opacity: '不透明度',
   padding: '内间距',
-  nursingGap: '护理文书间距',
+  itemGap: '内容间距',
 }
 
 export const textAlignOptions = [
@@ -114,6 +114,7 @@ export const dataFields = [
   { label: '医疗消息', value: 'nurseMessage' },
   { label: '护理文书', value: 'nursingTags' },
   { label: '输液消息', value: 'infusion' },
+  { label: '功能按钮', value: 'FunctionButtons' },
 ]
 
 export const eventFields = [

@@ -186,12 +186,46 @@ const list = [
       letterSpacing: 0,
       borderColor: '#000',
       borderWidth: 0,
-      backgroundColor: 'rgba(255, 255, 255, 0)',
+      backgroundColor: 'rgba(255, 255, 255, 1)',
       borderStyle: 'none',
       borderRadius: '',
       padding: 8,
-      nursingGap: 8
+      itemGap: 8
     },
+  },
+  {
+    component: 'FunctionButtons',
+    dataBind: 'FunctionButtons',
+    label: '功能按钮',
+    iconStr: '功能按钮',
+    propValue: [
+      { name: '开始用餐', componentName: 'foodClock', show: true },
+      { name: '呼叫', componentName: 'moviecall', show: true },
+      { name: '定位', componentName: 'position', show: true },
+      { name: '入院须知', componentName: 'instruction', show: true }
+    ],
+    style: {
+      width: 300,
+      height: 600,
+      fontSize: 43,
+      fontWeight: 400,
+      letterSpacing: 0,
+      borderColor: '#000',
+      borderWidth: 0,
+      backgroundColor: 'rgba(255, 255, 255, 1)',
+      borderStyle: 'none',
+      borderRadius: '',
+      padding: 8,
+      itemGap: 8
+    },
+    buttonStyles: {
+      height: 190,
+      borderRadius: 20,
+      iconWidth: 80,
+      iconHeight: 80,
+      color: '#ffffff',
+      backgroundColor: '#4caf50'
+    }
   },
   {
     component: 'Infusion',
