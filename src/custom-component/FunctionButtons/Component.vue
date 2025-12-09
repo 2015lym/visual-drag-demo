@@ -1,36 +1,33 @@
 <template>
   <div class="func-btn-container">
-    <div class="func-btn-collection" :style="{ padding: element.style.padding + 'px'}">
-      <!-- 核心功能按钮列表 -->
-      <div
-        class="func-btn-item"
-        v-for="(item, index) in propValue"
-        :key="index + 'bed'"
-        @click="handleItemClick(item)"
-        :style="{ 'margin-bottom': element.style.itemGap + 'px'}"
-      >
-        <!-- 主按钮容器：根据状态应用样式 -->
+    <div class="func-btn-collection" :style="{ padding: element.style.padding + 'px' }">
+      <div class="func-btn-item" v-for="(item, index) in propValue" :key="index + 'bed'" @click="handleItemClick(item)"
+        :style="{
+          'margin-bottom': element.style.itemGap + 'px',
+          height: (element.buttonStyles && element.buttonStyles.height ? element.buttonStyles.height : 190) + 'px'
+        }">
         <div class="func-btn-item-box" :class="{
-          'func-btn-item-box-checked': isSelected(item),
-          'is-timer-active': clockDown && item.componentName === 'foodClock'}">
+          'is-timer-active': clockDown && item.componentName === 'foodClock'
+        }" :style="{
+            'border-radius': (element.buttonStyles && element.buttonStyles.borderRadius ? element.buttonStyles.borderRadius : 10) + 'px',
+            'background-color': element.buttonStyles && element.buttonStyles.backgroundColor
+          }">
+
           <template v-if="clockDown && item.componentName === 'foodClock'">
-            <div class="timer-display-area">
+            <div class="timer-display-area" :style="{ color: element.buttonStyles }">
               <span class="timer-time">{{ clockDownTiem }}</span>
             </div>
           </template>
 
-          <!-- 区域 B: 默认按钮内容 (在其他所有情况下显示) -->
           <template v-else>
             <div class="func-btn-normal-content">
               <div class="func-btn-item-img">
-                <img
-                  class="func-btn-menu-img"
-                  :src="getModuleIcon(item)"
-                  :alt="item.name"
-                  style="width: 80px; height: 80px;"
-                />
+                <img class="func-btn-menu-img" :src="getModuleIcon(item)" :alt="item.name" :style="{
+                  width: (element.buttonStyles && element.buttonStyles.iconWidth ? element.buttonStyles.iconWidth : 80) + 'px',
+                  height: (element.buttonStyles && element.buttonStyles.iconHeight ? element.buttonStyles.iconHeight : 80) + 'px'
+                }" />
               </div>
-              <div class="func-btn-item-name">
+              <div class="func-btn-item-name" :style="{ color: element.buttonStyles && element.buttonStyles.color }">
                 {{ item.name }}
               </div>
             </div>
@@ -67,7 +64,7 @@ export default {
     },
     element: {
       type: Object,
-      default: () => { },
+      default: () => {},
     },
   },
 
@@ -75,7 +72,7 @@ export default {
     return {
       clockDownTiem: '00:00:00',
       clockDown: false, // 是否正在倒计时
-      mybar: {},
+
       currentType: 'blood_sugar',
 
       timerInterval: null,
@@ -84,12 +81,10 @@ export default {
   },
 
   mounted() {
-    // 页面加载时，检查本地是否存在未完成的倒计时
     this.checkLocalTimer();
   },
 
   beforeDestroy() {
-    // 销毁组件前，清除计时器
     if (this.timerInterval) {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
@@ -97,7 +92,6 @@ export default {
   },
 
   methods: {
-    // 辅助函数：格式化秒数为 HH:MM:SS
     formatTime(totalSeconds) {
       if (totalSeconds < 0) totalSeconds = 0;
       const hours = Math.floor(totalSeconds / 3600);
@@ -107,38 +101,31 @@ export default {
       return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
     },
 
-    // *** 停止/清理逻辑块 (用于内部调用) ***
-    // 仅供计时器自然结束或页面加载检查时调用
     stopTimerAndCleanUp() {
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-            this.timerInterval = null;
-        }
-        this.clockDown = false;
-        this.clockDownTiem = '00:00:00';
-        this.endTime = null;
-        localStorage.removeItem(TIMER_END_KEY);
+      if (this.timerInterval) {
+        clearInterval(this.timerInterval);
+        this.timerInterval = null;
+      }
+      this.clockDown = false;
+      this.clockDownTiem = '00:00:00';
+      this.endTime = null;
+      localStorage.removeItem(TIMER_END_KEY);
     },
-    // **********************************
 
-    // 检查 localStorage，恢复倒计时状态
     checkLocalTimer() {
       const storedEndTime = localStorage.getItem(TIMER_END_KEY);
 
       if (storedEndTime) {
         this.endTime = parseInt(storedEndTime, 10);
-        // 检查计时器是否已过期
         if (this.endTime > Date.now()) {
           this.clockDown = true;
           this.startCountdown();
         } else {
-          // 计时器已过期，清理本地存储
           this.stopTimerAndCleanUp();
         }
       }
     },
 
-    // 启动本地倒计时显示逻辑
     startCountdown() {
       if (this.timerInterval) {
         clearInterval(this.timerInterval);
@@ -149,7 +136,6 @@ export default {
         const timeLeftMs = this.endTime - now;
 
         if (timeLeftMs <= 0) {
-          // 计时结束，执行重置
           this.stopTimerAndCleanUp();
           return;
         }
@@ -158,10 +144,6 @@ export default {
         this.clockDownTiem = this.formatTime(timeLeftSeconds);
 
       }, 1000);
-    },
-
-    isSelected(item) {
-      return item.componentName === this.mybar.componentName
     },
 
     getModuleIcon(item) {
@@ -179,75 +161,80 @@ export default {
       }
     },
 
-    // 整合后的点击处理逻辑
     handleItemClick(item) {
       if (item.componentName === 'foodClock') {
         if (!this.clockDown) {
           const durationMs = this.foodClockPresetTime * 1000;
           this.endTime = Date.now() + durationMs;
-
-          // 存储结束时间到本地
           localStorage.setItem(TIMER_END_KEY, this.endTime.toString());
-
-          // 更新状态并启动计时器
           this.clockDown = true;
           this.startCountdown();
         }
         return;
       }
-      console.log('Function button clicked:', item);
+      console.log('goPage:', item.componentName);
+      window.parent.postMessage({ type: 'goPage', data: item.componentName }, '*')
+      // 阻止非计时按钮在计时期间被点击
+      if (this.clockDown) {
+        return;
+      }
     },
   }
 }
 </script>
 
 <style scoped>
-/* CSS样式调整区域 */
-
 .func-btn-container {
   overflow: hidden;
 }
 
 .func-btn-collection {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
 }
 
 .func-btn-item {
-  height: 190px;
   box-sizing: border-box;
   overflow: hidden;
   z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 100%;
-  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+}
+
+.func-btn-item:has(.is-timer-active) {
+  cursor: default;
 }
 
 .func-btn-item-box {
   width: 100%;
   height: 100%;
   display: flex;
-  background: #4caf50;
   padding: 10px 20px;
   box-sizing: border-box;
-  border-radius: 10px;
   align-items: center;
 }
 
+/* 计时器激活时的特殊颜色覆盖 */
 .func-btn-item-box.is-timer-active {
-  background: #ff5722;
+  background: #ffd5ac !important;
+  color: #3f4756 !important;
   justify-content: center;
 }
 
+/* 选中状态 */
+.func-btn-item-box-checked {
+  background: #00bcd4 !important;
+}
+
+
 .timer-display-area {
-  color: #ffffff;
   text-align: center;
   width: 100%;
 }
@@ -265,12 +252,7 @@ export default {
   width: 100%;
 }
 
-.func-btn-item-box.is-timer-active {
-    background: #ffd5ac !important;
-    color: #3f4756 !important;
-    opacity: 1;
-}
-
+/* img 的尺寸已通过行内样式绑定 */
 .func-btn-item-img {
   display: flex;
   justify-content: center;
@@ -278,10 +260,9 @@ export default {
   flex-shrink: 0;
 }
 
+/* func-btn-item-name 的 color 已通过行内样式绑定 */
 .func-btn-item-name {
   text-align: left;
-  color: #ffffff;
   flex-grow: 1;
-  white-space: nowrap;
 }
 </style>

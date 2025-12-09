@@ -120,15 +120,15 @@ export const dataFields = [
 export const eventFields = [
   { label: '无', value: '0' },
   { label: '更多选项', value: 'showMenus' },
-  { label: '护理工具', value: 'nursingTools' },
-  { label: '扫码点餐', value: 'scanOrder' },
+  { label: '护理工具', value: 'commonTools' },
+  { label: '扫码点餐', value: 'dining' },
   { label: '健康宣教', value: 'healthEducation' },
   { label: '历史消息', value: 'historyMessage' },
-  { label: '检查手术', value: 'examSurgery' },
-  { label: '问卷调查', value: 'survey' },
-  { label: '退出应用', value: 'exitApp' },
-  { label: '呼叫', value: 'call' },
-  { label: '定位', value: 'location' },
-  { label: '入院须知', value: 'admissionNotice' },
-  { label: '费用查询', value: 'feeQuery' }
+  { label: '检查手术', value: 'surgeryExam' },
+  { label: '问卷调查', value: 'questionnaire' },
+  { label: '退出应用', value: 'logout' },
+  { label: '呼叫', value: 'moviecall' },
+  { label: '定位', value: 'position' },
+  { label: '入院须知', value: 'instruction' },
+  { label: '费用查询', value: 'expenseQuery' }
 ]

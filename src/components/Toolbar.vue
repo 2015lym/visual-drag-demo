@@ -15,13 +15,13 @@
       <el-button style="margin-left: 10px" @click="preview(false)"> 预览 </el-button>
       <el-button @click="save">保存</el-button>
       <el-button @click="clearCanvas">清空画布</el-button>
-      <!-- <el-button :disabled="!areaData.components.length" @click="compose"> 组合 </el-button>
+      <el-button :disabled="!areaData.components.length" @click="compose"> 组合 </el-button>
       <el-button
         :disabled="!curComponent || curComponent.isLock || curComponent.component != 'Group'"
         @click="decompose"
       >
         拆分
-      </el-button> -->
+      </el-button>
 
       <!-- <el-button :disabled="!curComponent || curComponent.isLock" @click="lock"> 锁定 </el-button> -->
       <!-- <el-button :disabled="!curComponent || !curComponent.isLock" @click="unlock"> 解锁 </el-button> -->

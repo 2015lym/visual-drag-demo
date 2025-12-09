@@ -202,12 +202,13 @@ const list = [
       { name: '开始用餐', componentName: 'foodClock', show: true },
       { name: '呼叫', componentName: 'moviecall', show: true },
       { name: '定位', componentName: 'position', show: true },
-      { name: '入院须知', componentName: 'instruction', show: true }
+      { name: '入院须知', componentName: 'instruction', show: true },
+      { name: '费用查询', componentName: 'expenseQuery', show: true },
     ],
     style: {
-      width: 300,
-      height: 600,
-      fontSize: 43,
+      width: 200,
+      height: 720,
+      fontSize: 29,
       fontWeight: 400,
       letterSpacing: 0,
       borderColor: '#000',
@@ -215,16 +216,16 @@ const list = [
       backgroundColor: 'rgba(255, 255, 255, 1)',
       borderStyle: 'none',
       borderRadius: '',
-      padding: 8,
+      padding: 18,
       itemGap: 8
     },
     buttonStyles: {
-      height: 190,
-      borderRadius: 20,
-      iconWidth: 80,
-      iconHeight: 80,
+      height: 126,
+      borderRadius: 10,
+      iconWidth: 44,
+      iconHeight: 44,
       color: '#ffffff',
-      backgroundColor: '#4caf50'
+      backgroundColor: '#2f6ac6'
     }
   },
   {
