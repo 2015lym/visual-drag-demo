@@ -104,13 +104,13 @@ export default {
       const templateId = this.$route.query.id ? this.$route.query.id : '';
       if (templateId.length > 0) {
         const data = await ymRequest('get-template-edit-json-detail/' + templateId)
+        const { jsonContent, ...dataWithoutJson } = data.data;
+        sessionStorage.setItem('templateData', JSON.stringify(dataWithoutJson))
         if (data.data.jsonContent) {
           let jsonData = JSON.parse(data.data.jsonContent)
           setDefaultcomponentData(jsonData.componentData)
           this.$store.commit('setComponentData', jsonData.componentData)
           this.$store.commit('setCanvasStyle', jsonData.styleData)
-          const { jsonContent, ...dataWithoutJson } = data.data;
-          sessionStorage.setItem('templateData', JSON.stringify(dataWithoutJson))
         }
       }
 
