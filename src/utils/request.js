@@ -2,6 +2,42 @@ import { Message } from 'element-ui'
 
 export const urlRE = /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
 
+const BASE_URL = 'http://192.168.50.4/admin/';
+/**
+ * 通用请求封装
+ * @param {string} url 接口路径
+ * @param {string} method 请求方法
+ * @param {object} data 发送的数据
+ */
+export async function ymRequest(url, method = 'GET', data = null) {
+  const options = {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  // 如果是 POST 请求且有数据，自动处理 body
+  if (data && method === 'POST') {
+    options.body = JSON.stringify(data);
+  }
+
+  try {
+    const response = await fetch(`${BASE_URL}${url}`, options);
+
+    // 如果返回 401/500 等错误，抛出异常
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || '网络请求错误');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('请求失败:', error);
+    throw error;
+  }
+}
+
 function request(options) {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest()

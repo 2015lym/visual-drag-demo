@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-
+/template_edit
 
 # local env files
 .env.local

@@ -13,7 +13,7 @@
       </label> -->
 
       <el-button style="margin-left: 10px" @click="preview(false)"> 预览 </el-button>
-      <el-button @click="save">保存</el-button>
+      <!-- <el-button @click="save">保存</el-button> -->
       <el-button @click="clearCanvas">清空画布</el-button>
       <el-button :disabled="!areaData.components.length" @click="compose"> 组合 </el-button>
       <el-button
@@ -53,7 +53,7 @@
         <input v-model.number="canvasStyleData.height" @input="syncPresetSelection" />
       </div>
       <div class="canvas-config"> <span>画布比例</span> <input v-model="scale" @input="handleScaleChange" /> % </div>
-
+      <el-button style="margin-left: 16px;" @click="submit">提交</el-button>
       <!-- <el-switch
         v-model="switchValue"
         class="dark-mode-switch"
@@ -127,6 +127,7 @@ import eventBus from '@/utils/eventBus'
 import { $ } from '@/utils/utils'
 import changeComponentsSizeWithScale, { changeComponentSizeWithScale } from '@/utils/changeComponentsSizeWithScale'
 import { getComponentRotatedStyle } from '@/utils/style'
+import { ymRequest } from '@/utils/request';
 
 export default {
   components: { Preview, AceEditor },
@@ -178,11 +179,15 @@ export default {
         },
       ],
       presets: [
-        { key: '1600x720', label: '1600x720 (AH10Pro)', w: 1600, h: 720 },
-        { key: '1024x600', label: '1024x600 (AP7)', w: 1024, h: 600 },
+        { key: '1600x720', label: '1600x720 (10寸床头屏)', w: 1600, h: 720 },
+        { key: '1024x600', label: '1024x600 (7寸床头屏)', w: 1024, h: 600 },
+        { key: '1848x550', label: '1848x550 (液晶走廊屏)', w: 1848, h: 550 },
+        { key: '1920x1080', label: '1920x1080 (话机)', w: 1920, h: 1080 },
+        { key: '1080x1920', label: '1080x1920 (门口屏)', w: 1080, h: 1920 },
       ],
       // 新增：当前下拉选中值
       presetValue: 'custom',
+      loading: false
     }
   },
   computed: {
@@ -371,6 +376,92 @@ export default {
       localStorage.setItem('canvasData', JSON.stringify(this.componentData))
       localStorage.setItem('canvasStyle', JSON.stringify(this.canvasStyleData))
       this.$message.success('保存成功')
+    },
+
+    async submit() {
+      if (this.loading) return;
+      const currentPreset = this.presets.find(item => item.key === this.presetValue);
+      const templateData = JSON.parse(sessionStorage.getItem('templateData'));
+      let isEdit = false;
+      if (this.$route.query.id) {
+        isEdit = true;
+      }
+      let typeName = "";
+      let terminalTypeEn = "";
+
+      if (currentPreset) {
+        // 从 label 提取名称，例如 "1600x720 (10寸床头屏)" -> "10寸床头屏"
+        const match = currentPreset.label.match(/\((.+)\)/);
+        typeName = match ? match[1] : "";
+
+        // 2. 匹配 terminalTypeEn (对照你提供的列表)
+        const terminalList = [
+          { typeNameEn: "bedside_7", typeName: "7寸床头屏" },
+          { typeNameEn: "bedside_10", typeName: "10寸床头屏" },
+          { typeNameEn: "room", typeName: "门口屏" },
+          { typeNameEn: "lcd_corridor", typeName: "液晶走廊屏" },
+          { typeNameEn: "nurse", typeName: "话机" }
+        ];
+
+        const terminalInfo = terminalList.find(t => t.typeName === typeName);
+        terminalTypeEn = terminalInfo ? terminalInfo.typeNameEn : "";
+      }
+
+      // 3. 构建数据 (严格按照你的示例字段)
+      const myData = {
+        styleData: this.canvasStyleData,
+        componentData: this.componentData
+      };
+
+      const payload = {
+        templateName: typeName,
+        note: "蓝色界面",
+        terminalTypeEn: terminalTypeEn,
+        jsonContent: JSON.stringify(myData),
+        resolutionWidth: this.canvasStyleData.width,
+        resolutionHeight: this.canvasStyleData.height
+      };
+      if (isEdit) {
+        payload.id = this.$route.query.id;
+        payload.templateName = templateData.templateName || payload.templateName;
+        payload.note = templateData.note || payload.note;
+        payload.terminalTypeEn = templateData.terminalTypeEn || payload.terminalTypeEn;
+      } else {
+        const now = new Date();
+        // 获取年月日时分秒
+        const Y = now.getFullYear();
+        const M = String(now.getMonth() + 1).padStart(2, '0'); // 月份从0开始，要+1
+        const D = String(now.getDate()).padStart(2, '0');
+        const h = String(now.getHours()).padStart(2, '0');
+        const m = String(now.getMinutes()).padStart(2, '0');
+        const s = String(now.getSeconds()).padStart(2, '0');
+
+        const timeStr = `${Y}-${M}-${D} ${h}:${m}:${s}`;
+        payload.templateName = `${typeName}_${timeStr}`;
+      }
+      console.log(payload)
+      this.loading = true;
+      try {
+        let url = 'update-template-edit-json';
+        if (!isEdit) {
+          url = 'add-template-edit-json';
+        }
+        const result = await ymRequest(url, 'POST', payload);
+        this.$message.success(result.message)
+        if (!isEdit) {
+          this.$router.replace({query: {id: result.data.id }})
+          this.$emit('refresh');
+          // setTimeout(() => {
+          //   window.close();
+          // }, 1000);
+        }
+      } catch (error) {
+        this.$message.success('无法连接到服务器，请导出文件')
+      } finally {
+        setTimeout(() => {
+          this.loading = false;
+        }, 1000);
+      }
     },
 
     clearCanvas() {

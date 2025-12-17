@@ -1,6 +1,6 @@
 <template>
   <div :class="!isDarkMode ? 'home' : 'home dark'">
-    <Toolbar />
+    <Toolbar @refresh="restore" />
 
     <main>
       <!-- 左侧组件列表 -->
@@ -68,6 +68,7 @@ import RealTimeComponentList from '@/components/RealTimeComponentList'
 import CanvasAttr from '@/components/CanvasAttr'
 import { changeComponentSizeWithScale } from '@/utils/changeComponentsSizeWithScale'
 import { setDefaultcomponentData } from '@/store/snapshot'
+import { ymRequest } from '@/utils/request';
 
 export default {
   components: { Editor, ComponentList, AnimationList, EventList, Toolbar, RealTimeComponentList, CanvasAttr },
@@ -99,16 +100,30 @@ export default {
     }
   },
   methods: {
-    restore() {
-      // 用保存的数据恢复画布
-      if (localStorage.getItem('canvasData')) {
-        setDefaultcomponentData(JSON.parse(localStorage.getItem('canvasData')))
-        this.$store.commit('setComponentData', JSON.parse(localStorage.getItem('canvasData')))
+    async restore() {
+      const templateId = this.$route.query.id ? this.$route.query.id : '';
+      if (templateId.length > 0) {
+        const data = await ymRequest('get-template-edit-json-detail/' + templateId)
+        if (data.data.jsonContent) {
+          let jsonData = JSON.parse(data.data.jsonContent)
+          setDefaultcomponentData(jsonData.componentData)
+          this.$store.commit('setComponentData', jsonData.componentData)
+          this.$store.commit('setCanvasStyle', jsonData.styleData)
+          const { jsonContent, ...dataWithoutJson } = data.data;
+          sessionStorage.setItem('templateData', JSON.stringify(dataWithoutJson))
+        }
       }
 
-      if (localStorage.getItem('canvasStyle')) {
-        this.$store.commit('setCanvasStyle', JSON.parse(localStorage.getItem('canvasStyle')))
-      }
+
+      // 用保存的数据恢复画布
+      // if (localStorage.getItem('canvasData')) {
+      //   setDefaultcomponentData(JSON.parse(localStorage.getItem('canvasData')))
+      //   this.$store.commit('setComponentData', JSON.parse(localStorage.getItem('canvasData')))
+      // }
+
+      // if (localStorage.getItem('canvasStyle')) {
+      //   this.$store.commit('setCanvasStyle', JSON.parse(localStorage.getItem('canvasStyle')))
+      // }
     },
 
     handleDrop(e) {

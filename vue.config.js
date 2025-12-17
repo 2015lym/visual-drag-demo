@@ -22,5 +22,6 @@ module.exports = {
       overlay: false // 不显示报错遮罩层
     }
   },
-  lintOnSave: false
+  lintOnSave: false,
+  outputDir: 'template_edit',
 }
