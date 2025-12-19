@@ -487,15 +487,16 @@ export default {
     processJSON() {
       try {
         const data = JSON.parse(this.jsonData)
-        if (!Array.isArray(data)) {
-          this.$message.error('数据格式错误，组件数据必须是一个数组')
+        if (typeof data !== 'object' || data === null || Array.isArray(data)) {
+          this.$message.error('数据格式错误，组件数据必须是一个对象')
           return
         }
 
         if (this.isExport) {
           this.downloadFileUtil(this.jsonData, 'application/json', 'data.json')
         } else {
-          this.$store.commit('setComponentData', data)
+          this.$store.commit('setComponentData', data.componentData)
+          this.$store.commit('setCanvasStyle', data.styleData)
         }
 
         this.isShowDialog = false
@@ -508,7 +509,11 @@ export default {
       changeComponentsSizeWithScale(100)
       this.isShowDialog = true
       this.isExport = true
-      this.jsonData = JSON.stringify(this.componentData, null, 4)
+
+      // this.jsonData = JSON.stringify(this.componentData, null, 4)
+      this.jsonData = JSON.stringify({
+        styleData: this.canvasStyleData,
+        componentData: this.componentData},null , 4)
     },
 
     downloadFileUtil(data, type, fileName = '') {

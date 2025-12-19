@@ -1,8 +1,11 @@
 import { Message } from 'element-ui'
 
 export const urlRE = /(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/
-
-const BASE_URL = 'http://192.168.50.4/admin/';
+const isProduction = process.env.NODE_ENV === 'production'
+let BASE_URL = `http://192.168.50.4/admin/`;
+if (isProduction) {
+  BASE_URL = `http://${document.location.hostname}/admin/`;
+}
 /**
  * 通用请求封装
  * @param {string} url 接口路径
