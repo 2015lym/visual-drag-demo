@@ -115,6 +115,10 @@ export const dataFields = [
   { label: '护理文书', value: 'nursingTags' },
   { label: '输液消息', value: 'infusion' },
   { label: '功能按钮', value: 'FunctionButtons' },
+  { label: '饮食', value: 'food' },
+  { label: '过敏', value: 'allergy' },
+  { label: '既往史', value: 'allergyNurse' },
+  { label: '医嘱', value: 'nursingTagsText' },
 ]
 
 export const eventFields = [

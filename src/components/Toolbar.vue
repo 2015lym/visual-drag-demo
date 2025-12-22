@@ -31,7 +31,7 @@
         <span>分辨率</span>
         <!-- 新增：预设尺寸下拉 -->
         <el-select
-          v-model="presetValue"
+          v-model="canvasStyleData.presetValue"
           placeholder="预设"
           size="small"
           style="width: 200px; margin: 0 16px"
@@ -44,7 +44,7 @@
             :label="p.label"
             :value="p.key"
           />
-          <el-option :value="'custom'" label="自定义" />
+          <!-- <el-option :value="'custom'" label="自定义" /> -->
         </el-select>
 
         <!-- 原有输入框保留，增加 number 修饰符与同步逻辑 -->
@@ -179,14 +179,13 @@ export default {
         },
       ],
       presets: [
-        { key: '1600x720', label: '1600x720 (10寸床头屏)', w: 1600, h: 720 },
-        { key: '1024x600', label: '1024x600 (7寸床头屏)', w: 1024, h: 600 },
-        { key: '1848x550', label: '1848x550 (液晶走廊屏)', w: 1848, h: 550 },
-        { key: '1920x1080', label: '1920x1080 (话机)', w: 1920, h: 1080 },
-        { key: '1080x1920', label: '1080x1920 (门口屏)', w: 1080, h: 1920 },
+        { key: '10寸床头屏', label: '10寸床头屏 (1600x720)', w: 1600, h: 720 },
+        { key: '7寸床头屏', label: '7寸床头屏 (1024x600)', w: 1024, h: 600 },
+        { key: '液晶走廊屏', label: '液晶走廊屏 (1848x550)', w: 1848, h: 550 },
+        { key: '话机', label: '话机 (1920x1080)', w: 1920, h: 1080 },
+        { key: '门口屏', label: '门口屏 (1080x1920)', w: 1080, h: 1920 },
       ],
       // 新增：当前下拉选中值
-      presetValue: 'custom',
       loading: false
     }
   },
@@ -222,8 +221,8 @@ export default {
       if (p) {
         this.canvasStyleData.width = p.w
         this.canvasStyleData.height = p.h
-        // 选完就记录一次快照（可选）
-        this.$store.commit && this.$store.commit('recordSnapshot')
+        // 选完就记录一次快照
+        this.$store.commit('recordSnapshot')
         // 再同步一次（保证状态一致）
         this.syncPresetSelection()
       }
@@ -231,10 +230,11 @@ export default {
 
     // 新增：根据当前宽高匹配预设；匹配不到则为自定义
     syncPresetSelection() {
-      const w = Number(this.canvasStyleData.width)
-      const h = Number(this.canvasStyleData.height)
-      const match = this.presets.find(p => p.w === w && p.h === h)
-      this.presetValue = match ? match.key : 'custom'
+      // 暂时不需要同步修改
+      // const w = Number(this.canvasStyleData.width)
+      // const h = Number(this.canvasStyleData.height)
+      // const match = this.presets.find(p => p.w === w && p.h === h)
+      // this.presetValue = match ? match.key : 'custom'
     },
     handleComponentAlign(command) {
       this.$store.commit(command)
@@ -380,7 +380,9 @@ export default {
 
     async submit() {
       if (this.loading) return;
-      const currentPreset = this.presets.find(item => item.key === this.presetValue);
+      changeComponentsSizeWithScale(100)
+      this.scale = 100;
+      const currentPreset = this.presets.find(item => item.key === this.$store.state.canvasStyleData.presetValue);
       const templateData = JSON.parse(sessionStorage.getItem('templateData'));
       let isEdit = false;
       if (this.$route.query.id) {
@@ -388,11 +390,10 @@ export default {
       }
       let typeName = "";
       let terminalTypeEn = "";
-
       if (currentPreset) {
         // 从 label 提取名称，例如 "1600x720 (10寸床头屏)" -> "10寸床头屏"
         const match = currentPreset.label.match(/\((.+)\)/);
-        typeName = match ? match[1] : "";
+        typeName = currentPreset.key;
 
         // 2. 匹配 terminalTypeEn (对照你提供的列表)
         const terminalList = [
@@ -405,6 +406,9 @@ export default {
 
         const terminalInfo = terminalList.find(t => t.typeName === typeName);
         terminalTypeEn = terminalInfo ? terminalInfo.typeNameEn : "";
+        console.log(match)
+console.log(typeName)
+console.log(typeName)
       }
 
       // 3. 构建数据 (严格按照你的示例字段)

@@ -350,7 +350,11 @@ export default {
       overflow: auto;
       padding: 20px;
       transition: all 0.3s;
-
+        /* 滚动条加粗 */
+        ::-webkit-scrollbar {
+          width: 8px;
+          height: 8px;
+        }
       .content {
         width: 100%;
         height: 100%;

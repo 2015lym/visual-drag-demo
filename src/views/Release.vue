@@ -3,8 +3,8 @@
     <div class="canvas-container"
       :style="{
         ...getCanvasStyle(canvasStyleData),
-        width: changeStyleWithScale(canvasStyleData.width) + 'px',
-        height: changeStyleWithScale(canvasStyleData.height) + 'px',
+        width: canvasStyleData.width + 'px',
+        height: canvasStyleData.height + 'px',
       }">
       <ComponentWrapper v-for="(item, index) in componentData" :key="index" :config="item" />
     </div>
